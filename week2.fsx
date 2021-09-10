@@ -28,6 +28,49 @@ let rec evenN n =
   | 0 -> []
   | n -> evenN(n-1) @ [(n*2)]
 
-// let evenM n =
-//   [for x in 2..2..(n*2) do yield x]
+// Using sequence
+let evenM n =
+  [for x in 2..2..(n*2) do yield x]
 
+// 4.8
+let rec accumulateTuple xs (ys,zs) =
+  match xs with
+  | [] -> (ys,zs)
+  | [x0] -> (ys@[x0],zs)
+  | x0::x1::tail -> accumulateTuple tail (ys@[x0], zs@[x1])
+
+let split xs =
+  accumulateTuple xs ([],[])
+
+// 4.9
+let rec zip (xs,ys) =
+  match (xs,ys) with
+  | ([],[]) -> []
+  | (_,[]) -> [] // Annoying
+  | ([],_) -> [] // Annoying
+  | (x0::xtail,y0::ytail) -> (x0,y0)::zip (xtail,ytail)
+
+// 4.12
+let p x =
+  x > 0
+
+let accumulateSum p xs sum =
+  match p,xs,sum with
+  | _,[],sum -> p sum
+
+let sum p xs =
+  accumulateSum p xs 0
+
+// 4.16
+
+let rec f = function
+    | (x, [])    -> []
+    | (x, y::ys) -> (x+y)::f(x-1, ys);;
+
+let rec g = function
+    | []       -> []
+    | (x,y)::s -> (x,y)::(y,x)::g s;;
+    
+let rec h = function 
+  |[] -> []
+  | x::xs -> x::(h xs)@[x];;
