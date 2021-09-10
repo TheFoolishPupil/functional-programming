@@ -30,5 +30,5 @@ let rec multicplicity x xs =
     match xs with
     | [] -> 0
     | y::tail when y=x -> 1 + multicplicity x tail
-    | y::tail -> multicplicity x tail
+    | _::tail -> multicplicity x tail
 

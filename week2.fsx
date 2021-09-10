@@ -51,26 +51,35 @@ let rec zip (xs,ys) =
   | (x0::xtail,y0::ytail) -> (x0,y0)::zip (xtail,ytail)
 
 // 4.12
+// Test case
 let p x =
   x > 0
 
-let accumulateSum p xs sum =
-  match p,xs,sum with
-  | _,[],sum -> p sum
 
-let sum p xs =
-  accumulateSum p xs 0
+let rec sum p xs =
+  match p,xs with // Ask why there is incomplete pattern match
+  | p,[] -> 0
+  | p,x::tail when p x -> x + sum p tail
+  | p,x::tail when not (p x) -> sum p tail
+
+
+
+
 
 // 4.16
 
-let rec f = function
-    | (x, [])    -> []
-    | (x, y::ys) -> (x+y)::f(x-1, ys);;
+// int * list<int> -> list<int>
+// let rec f = function
+//     | (x, [])    -> []
+//     | (x, y::ys) -> (x+y)::f(x-1, ys);;
 
-let rec g = function
-    | []       -> []
-    | (x,y)::s -> (x,y)::(y,x)::g s;;
-    
-let rec h = function 
-  |[] -> []
-  | x::xs -> x::(h xs)@[x];;
+// list<a' * a'> -> list<a' * a'>
+// let rec g = function
+//     | []       -> []
+//     | (x,y)::s -> (x,y)::(y,x)::g s;;
+
+// list<a'> -> list<a'>
+// let rec h = function 
+//   |[] -> []
+//   | x::xs -> x::(h xs)@[x];;
+
