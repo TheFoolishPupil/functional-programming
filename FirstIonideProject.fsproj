@@ -10,4 +10,8 @@
     <Compile Include="Program.fs" />
   </ItemGroup>
 
+  <ItemGroup>
+    <PackageReference Include="FsCheck" Version="2.16.3" />
+  </ItemGroup>
+
 </Project>
