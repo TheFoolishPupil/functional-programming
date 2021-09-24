@@ -36,13 +36,33 @@ let rec eval a (xs:Poly) =
 
 // Part 2
 
+// isLegal
 // Auxillary functions
-
 let rec sum xs =
   match xs with
   | [] -> 0
   | x::tail -> x + sum tail
 
+// Poly functions
+let rec isLegal xs =
+  match xs with
+  | x::tail when x=0 && ((sum tail) = 0) -> false
+  | x::tail when x<>0 && ((sum tail) = 0) -> true
+  | [] -> true
+  | x::tail -> isLegal tail
+
+// prune
+// Poly functions
+let rec prune xs =
+  match xs with
+  | [] -> []
+  | x::tail when not (isLegal(x::tail))  -> []
+  | x::tail -> x::prune tail
+  // | x::tail when x<>0 && ((sum tail) = 0)  -> [x]
+
+
+// toString
+// Auxillary functions
 let int2String x = sprintf "%i" x
 
 let rec toStringAccumulator (xs:list<int>) s n =
@@ -56,23 +76,9 @@ let rec derivativeAccumulator xs n =
   | x::tail, n -> n*x::(derivativeAccumulator tail (n+1))
 
 // Poly functions
-
-let rec isLegal xs =
-  match xs with
-  | x::tail when x=0 && ((sum tail) = 0) -> false
-  | x::tail when x<>0 && ((sum tail) = 0) -> true
-  | [] -> true
-  | x::tail -> isLegal tail
-
-let rec prune xs =
-  match xs with
-  | [] -> []
-  | x::tail when x=0 && ((sum tail) = 0)  -> [] // How to reuse isLegal?
-  | x::tail when x<>0 && ((sum tail) = 0)  -> [x]
-  | x::tail -> x::prune tail
-
 let toString xs =
   toStringAccumulator xs "p(x) is " 0
 
 let derivative xs =
-  derivativeAccumulator xs 0
+  (derivativeAccumulator xs 0).[1..]
+
