@@ -35,3 +35,23 @@ open FsCheck
 let orderedSort (xs:int list) = ordered (sort xs)
 
 Check.Quick orderedSort
+
+
+let rec increment (x, cnt) =
+  match cnt with
+  | [] -> []
+  | (i, c)::ys when i = x -> (i, c+1)::ys
+  | y::ys -> y::increment (x, ys)
+
+// let rec toCountingAccumulator xs cnt =
+//   match xs, cnt with
+//   | (x, c)::xtail,  when
+
+// let toCounting xs =
+//   toCountingAccumulator xs []
+
+// Count sums of occurences for each element of an array
+let rec toCounting xs =
+  match xs with
+  | [] -> []
+  | x::xtail -> increment (x, toCounting xtail)

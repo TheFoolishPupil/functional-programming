@@ -1,19 +1,16 @@
 open System
 
-let rec merge xs ys =
-  match xs, ys with
- 
-  | x::xtail, y::ytail when x<y -> x::merge xtail (y::ytail)
-  | x::xtail, y::ytail when y<x -> y::merge (x::xtail) ytail
-  | x::xtail, y::ytail -> [y;x]@merge xtail ytail
-  | [], ys -> ys
-  | xs, [] -> xs
 
+
+let unzip zs = List.foldBack
+                 (fun (x,y) (xs,ys) -> (x::xs,y::ys))
+                 zs
+                 ([],[])
 
 
 
 [<EntryPoint>]
 let main argv =
-    let message = merge [] []
-
+    // let message = increment (2, [(1,1); (2,4); (3,1)])
+    let x = unzip [(1,2);(3,4)]
     0 // return an integer exit code

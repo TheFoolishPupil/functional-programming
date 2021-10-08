@@ -57,10 +57,10 @@ let p x =
 
 
 let rec sum p xs =
-  match p,xs with // Ask why there is incomplete pattern match
-  | p,[] -> 0
-  | p,x::tail when p x -> x + sum p tail
-  | p,x::tail when not (p x) -> sum p tail
+  match xs with // Ask why there is incomplete pattern match
+  | [] -> 0
+  | x::tail when p x -> x + sum p tail
+  | x::tail when not (p x) -> sum p tail
 
 
 
